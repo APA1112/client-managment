@@ -1,0 +1,58 @@
+// ---------------------------------------------------------
+// Datasource y generador
+// ---------------------------------------------------------
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql" // o "postgresql" / "sqlite" según tu BD
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------
+// Modelos de la base de datos
+// ---------------------------------------------------------
+
+model Client {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String
+  number    Int
+  projects  Project[]
+  payments  Payment[]
+}
+
+model ProjectStatus {
+  id       Int       @id @default(autoincrement())
+  name     String
+  projects Project[]
+}
+
+model PaymentStatus {
+  id       Int       @id @default(autoincrement())
+  name     String
+  payments Payment[]
+}
+
+model Project {
+  id         Int             @id @default(autoincrement())
+  name       String
+  client     Client          @relation(fields: [clientId], references: [id])
+  clientId   Int
+  status     ProjectStatus   @relation(fields: [statusId], references: [id])
+  statusId   Int
+  payments   Payment[]
+}
+
+model Payment {
+  id          Int            @id @default(autoincrement())
+  quantity    Decimal         @db.Decimal(10, 2)
+  client      Client          @relation(fields: [clientId], references: [id])
+  clientId    Int
+  project     Project         @relation(fields: [projectId], references: [id])
+  projectId   Int
+  status      PaymentStatus   @relation(fields: [statusId], references: [id])
+  statusId    Int
+  createdAt   DateTime        @default(now())
+}
