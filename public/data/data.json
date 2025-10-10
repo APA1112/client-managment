@@ -1,6 +1,6 @@
 {
   "sidebarItems": [
-    { "name": "Dashboard", "icon": "House", "href": "/" },
+    { "name": "Dashboard", "icon": "House", "href": "/dashboard" },
     { "name": "Projects", "icon": "ShoppingBag", "href": "/user-project" },
     { "name": "Clients", "icon": "Users", "href": "/user-client" },
     { "name": "Sales", "icon": "DollarSign", "href": "/sales" },
