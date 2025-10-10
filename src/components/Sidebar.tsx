@@ -43,7 +43,7 @@ interface SidebarItem {
 
 
 function Sidebar() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // Tipamos el estado para que sea un array de SidebarItem
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([]); 
   const pathname = usePathname();

@@ -9,7 +9,7 @@ interface Client {
   email: string;
   number: string;
   projects: { id: number; name: string }[];
-  payments: { id: number; amount: number; date: string }[];
+  payments: { id: number; amount: number; createdAt: string }[];
 }
 
 // La función de eliminación ya no es independiente, ahora es parte del componente.
@@ -76,7 +76,7 @@ function ClientCard({ clients: initialClients }: { clients: Client[] }) {
             {client.payments.map((payment) => (
               <li key={payment.id}>
                 Monto: {payment.amount} - Fecha:{" "}
-                {new Date(payment.date).toLocaleDateString()}
+                {new Date(payment.createdAt).toLocaleDateString()}
               </li>
             ))}
           </ul>
