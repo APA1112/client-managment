@@ -8,7 +8,8 @@ import { motion } from "framer-motion";
 interface StatCardProps {
   name: string;
   icon: LucideIcon; // El icono es un componente de Lucide (o React Component)
-  value: string | number; // El valor puede ser una cadena o un número
+  value: React.ReactNode; // El valor puede ser una cadena o un número
+  className?: string; // Clase CSS opcional
 }
 
 // Usamos FC<StatCardProps> para tipar el componente

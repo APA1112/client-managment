@@ -80,10 +80,10 @@ function ClientCard({ clients: initialClients }: { clients: Client[] }) {
           {/* 6. Añadir botones para acciones */}
           <div className="flex gap-4 mt-2">
             {/* 5. Llamar a la función local */}
-            <button onClick={() => deleteClient(client.id)}> 
+            <button onClick={() => deleteClient(client.id)} className="cursor-pointer"> 
               <Trash />
             </button>
-            <button>
+            <button className="cursor-pointer">
               <Pencil />
             </button>
           </div>
