@@ -1,34 +1,32 @@
-// components/ClientCountCard.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
 import StatCard from "@/components/StatCard";
-import { Users } from "lucide-react";
+import { FolderKanban, Users } from "lucide-react";
 
-// Define la estructura del cliente
-interface Client {
+interface Project{
     id: string | number;
     name: string;
 }
 
-// Lógica de carga de clientes
-async function loadClients(): Promise<Client[]> {
-    const res = await fetch("http://localhost:3000/api/user-client");
+// Lógica de carga de proyectos
+async function loadProjects(): Promise<Project[]> {
+    const res = await fetch("http://localhost:3000/api/user-project");
     if (!res.ok) {
-        throw new Error(`Error al cargar clientes: ${res.statusText}`);
+        throw new Error(`Error al cargar proyectos: ${res.statusText}`);
     }
-    return (await res.json()) as Client[];
+    return (await res.json()) as Project[];
 }
 
-export default function ClientCountCard() {
+export default function ProjectCountCard() {
     const [clientCount, setClientCount] = useState<string>("Cargando...");
     const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchCount() {
             try {
-                const clientList = await loadClients();
-                setClientCount(clientList.length.toString());
+                const projectList = await loadProjects();
+                setClientCount(projectList.length.toString());
                 setError(false);
             } catch (err) {
                 console.error("Fallo al obtener clientes:", err);
@@ -51,8 +49,8 @@ export default function ClientCountCard() {
 
     return (
         <StatCard 
-            name="Total clients" 
-            icon={Users} 
+            name="Total projects" 
+            icon={FolderKanban} 
             value={clientCount === "Cargando..." ? loadingValue : clientCount} 
             // Opcional: Estilo de carga si deseas solo el nombre y el spinner
             className={clientCount === "Cargando..." ? "bg-gray-50 animate-pulse" : ""}

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react"; // 👈 Importar useState
 import { Trash, Pencil } from "lucide-react";
@@ -28,19 +28,22 @@ function ClientCard({ clients: initialClients }: { clients: Client[] }) {
 
     try {
       // Usar ruta relativa para mejor portabilidad en Next.js
-      const res = await fetch(`/api/user-client/${numberId}`, { 
+      const res = await fetch(`/api/user-client/${numberId}`, {
         method: "DELETE",
       });
 
       if (res.ok) {
         // 3. ACTUALIZACIÓN DEL ESTADO: Filtrar el cliente eliminado
-        setClientList(currentClients => 
-          currentClients.filter(client => client.id !== numberId)
+        setClientList((currentClients) =>
+          currentClients.filter((client) => client.id !== numberId)
         );
         console.log(`Cliente con ID ${id} eliminado correctamente.`);
       } else {
         const errorData = await res.json();
-        console.error("Error al eliminar el cliente:", errorData.error || res.statusText);
+        console.error(
+          "Error al eliminar el cliente:",
+          errorData.error || res.statusText
+        );
         // Opcional: mostrar un mensaje de error al usuario
       }
     } catch (error) {
@@ -50,11 +53,11 @@ function ClientCard({ clients: initialClients }: { clients: Client[] }) {
 
   // 4. Renderizar usando el estado `clientList`
   return (
-    <div>
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8 p-4">
       {clientList.map((client) => (
         <div
           key={client.id}
-          className="border p-4 my-2 rounded-2xl w-4/5 mx-auto bg-neutral-300 shadow-2xl"
+          className="bg-[#1e1e1e] backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-[#1f1f1f] text-gray-200 p-2"
         >
           <h1>ID: {client.id}</h1>
           <h2>Nombre: {client.name}</h2>
@@ -72,7 +75,8 @@ function ClientCard({ clients: initialClients }: { clients: Client[] }) {
           <ul>
             {client.payments.map((payment) => (
               <li key={payment.id}>
-                Monto: {payment.amount} - Fecha: {new Date(payment.date).toLocaleDateString()}
+                Monto: {payment.amount} - Fecha:{" "}
+                {new Date(payment.date).toLocaleDateString()}
               </li>
             ))}
           </ul>
@@ -80,7 +84,10 @@ function ClientCard({ clients: initialClients }: { clients: Client[] }) {
           {/* 6. Añadir botones para acciones */}
           <div className="flex gap-4 mt-2">
             {/* 5. Llamar a la función local */}
-            <button onClick={() => deleteClient(client.id)} className="cursor-pointer"> 
+            <button
+              onClick={() => deleteClient(client.id)}
+              className="cursor-pointer"
+            >
               <Trash />
             </button>
             <button className="cursor-pointer">
@@ -89,7 +96,9 @@ function ClientCard({ clients: initialClients }: { clients: Client[] }) {
           </div>
         </div>
       ))}
-      {clientList.length === 0 && <p className="text-center mt-5">No hay clientes para mostrar.</p>}
+      {clientList.length === 0 && (
+        <p className="text-center mt-5">No hay clientes para mostrar.</p>
+      )}
     </div>
   );
 }

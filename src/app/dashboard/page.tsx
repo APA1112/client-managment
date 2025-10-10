@@ -6,8 +6,10 @@ import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import StatCard from "@/components/StatCard";
 import ClientCountCard from "@/components/ClientCountCard"; // 👈 Nuevo componente
-import { DollarSign } from "lucide-react"; // Users ya no se necesita aquí
+import { DollarSign, FolderKanban } from "lucide-react"; // Users ya no se necesita aquí
 import { motion } from "framer-motion";
+import SalesChart from "@/components/SalesChart";
+import ProjectCountCard from "@/components/ProjectCountCard";
 
 // La función loadClients YA NO es necesaria aquí
 
@@ -27,14 +29,16 @@ function Page() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          {/* Estas tarjetas se renderizan INMEDIATAMENTE */}
           <StatCard name="Total sales" icon={DollarSign} value="$182,450" />
           
           {/* Esta tarjeta se renderiza con "Cargando..." y luego con el valor final */}
           <ClientCountCard /> 
           
-          <StatCard name="Projects" icon={DollarSign} value="$182,450" />
+          <ProjectCountCard />
         </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <SalesChart />
+        </div>
       </div>
     </div>
   );
