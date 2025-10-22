@@ -12,6 +12,7 @@ import {
   ShoppingBag,
   ShoppingCart, // 👈 Añadido: Para el elemento "Orders" de tu JSON
   Users,
+  LogOut
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -28,6 +29,7 @@ const ICONS = {
   Users,
   Bell,
   Info,
+  LogOut
 };
 
 // 2. Definición de tipos para mejorar la seguridad de TypeScript

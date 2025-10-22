@@ -3,11 +3,8 @@
     { "name": "Dashboard", "icon": "House", "href": "/dashboard" },
     { "name": "Projects", "icon": "ShoppingBag", "href": "/user-project" },
     { "name": "Clients", "icon": "Users", "href": "/user-client" },
-    { "name": "Sales", "icon": "DollarSign", "href": "/sales" },
-    { "name": "Orders", "icon": "ShoppingBag", "href": "/orders" },
     { "name": "Settings", "icon": "Settings", "href": "" },
-    { "name": "Messages", "icon": "Mail", "href": "" },
     { "name": "Notifications", "icon": "Bell", "href": "" },
-    { "name": "Help", "icon": "Info", "href": "" }
+    { "name": "Log Out", "icon": "LogOut", "href": "/auth/logout" }
   ]
 }
