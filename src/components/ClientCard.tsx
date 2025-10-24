@@ -183,7 +183,7 @@ function ClientCard({
   };
 
   return (
-    <div className="bg-[#1e1e1e] backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-[#1f1f1f] text-gray-200 p-4 mx-auto flex gap-2 justify-between items-center w-full hover:border-gray-600 transition">
+    <div className="bg-[#1e1e1e] backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-[#1f1f1f] text-gray-200 p-4 mx-auto flex flex-col gap-2 justify-between items-center w-full hover:border-gray-600 transition sm:flex-col lg:flex-row">
       <div>
         <p className="ml-2 pl-2 text-gray-300 font-bold">{name}</p>
         <p className="ml-2 pl-2 text-gray-300">{email}</p>
