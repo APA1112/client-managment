@@ -20,12 +20,15 @@ function Hero() {
         soluciones
       </h3>
       <div className="text-3xl sm:text-6xl lg:text-[66px] font-bold text-gray-300">
+        {/*
         <TypeAnimation
           sequence={["FullStack Developer", 1500, "Data Analyst", 1500, "AI Enthusiast", 1500]}
           wrapper="span"
           speed={50}
           repeat={Infinity}
         />
+        */}
+        <span>Web Developer</span>
       </div>
       <p className="text-gray-500 max-w-2xl mx-auto">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis

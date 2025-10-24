@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react"; // 👈 Importar useState
-import { Trash, Pencil } from "lucide-react";
+import React, { useState } from "react";
+import ClientCard from "./ClientCard";
+import { motion } from "framer-motion";
 
 interface Client {
   id: number;
@@ -12,95 +13,49 @@ interface Client {
   payments: { id: number; amount: number; createdAt: string }[];
 }
 
-// La función de eliminación ya no es independiente, ahora es parte del componente.
-function ClientCard({ clients: initialClients }: { clients: Client[] }) {
-  // 1. Usar useState para mantener la lista de clientes mutable
+function ClientsList({ clients: initialClients }: { clients: Client[] }) {
   const [clientList, setClientList] = useState<Client[]>(initialClients);
 
-  // 2. Definir la función de eliminación dentro del componente
-  const deleteClient = async (id: number) => {
-    const numberId = Number(id);
-
-    if (isNaN(numberId)) {
-      console.error("El ID proporcionado no es un número válido");
-      return;
-    }
-
-    try {
-      // Usar ruta relativa para mejor portabilidad en Next.js
-      const res = await fetch(`/api/user-client/${numberId}`, {
-        method: "DELETE",
-      });
-
-      if (res.ok) {
-        // 3. ACTUALIZACIÓN DEL ESTADO: Filtrar el cliente eliminado
-        setClientList((currentClients) =>
-          currentClients.filter((client) => client.id !== numberId)
-        );
-        console.log(`Cliente con ID ${id} eliminado correctamente.`);
-      } else {
-        const errorData = await res.json();
-        console.error(
-          "Error al eliminar el cliente:",
-          errorData.error || res.statusText
-        );
-        // Opcional: mostrar un mensaje de error al usuario
-      }
-    } catch (error) {
-      console.error("Fallo en la comunicación con la API:", error);
-    }
+  // Se llama desde ClientCard después de una edición exitosa
+  const handleClientUpdated = (updated: { id: string | number; name: string; email: string; number: string }) => {
+    setClientList((prev) =>
+      prev.map((c) =>
+        c.id === Number(updated.id)
+          ? { ...c, name: updated.name, email: updated.email, number: updated.number }
+          : c
+      )
+    );
   };
 
-  // 4. Renderizar usando el estado `clientList`
+  // Se llama desde ClientCard después de una eliminación exitosa
+  const handleDeleteSuccess = (id: number) => {
+    setClientList((prev) => prev.filter((c) => c.id !== id));
+  };
+
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8 p-4">
+    <motion.div
+      className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8 p-4 mx-4 lg:mx-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+    >
       {clientList.map((client) => (
-        <div
-          key={client.id}
-          className="bg-[#1e1e1e] backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-[#1f1f1f] text-gray-200 p-2"
-        >
-          <h1>ID: {client.id}</h1>
-          <h2>Nombre: {client.name}</h2>
-          <p>Correo: {client.email}</p>
-          <p>Teléfono: {client.number}</p>
-          <hr />
-          <p>Proyectos:</p>
-          <ul>
-            {client.projects.map((project) => (
-              <li key={project.id}>{project.name}</li>
-            ))}
-          </ul>
-          <hr />
-          <p>Pagos:</p>
-          <ul>
-            {client.payments.map((payment) => (
-              <li key={payment.id}>
-                Monto: {payment.amount} - Fecha:{" "}
-                {new Date(payment.createdAt).toLocaleDateString()}
-              </li>
-            ))}
-          </ul>
-          <hr />
-          {/* 6. Añadir botones para acciones */}
-          <div className="flex gap-4 mt-2">
-            {/* 5. Llamar a la función local */}
-            <button
-              onClick={() => deleteClient(client.id)}
-              className="cursor-pointer"
-            >
-              <Trash />
-            </button>
-            <button className="cursor-pointer">
-              <Pencil />
-            </button>
-          </div>
+        <div key={client.id}>
+          <ClientCard
+            id={client.id.toString()}
+            name={client.name}
+            email={client.email}
+            phoneNumber={client.number}
+            onClientUpdated={handleClientUpdated}
+            onDeleteSuccess={handleDeleteSuccess}
+          />
         </div>
       ))}
       {clientList.length === 0 && (
-        <p className="text-center mt-5">No hay clientes para mostrar.</p>
+        <p className="text-center mt-5 text-gray-400">No hay clientes para mostrar.</p>
       )}
-    </div>
+    </motion.div>
   );
 }
 
-export default ClientCard;
+export default ClientsList;

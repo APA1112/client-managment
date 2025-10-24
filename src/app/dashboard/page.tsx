@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import StatCard from "@/components/StatCard";
 import ClientCountCard from "@/components/ClientCountCard"; // 👈 Nuevo componente
-import { DollarSign, FolderKanban } from "lucide-react"; // Users ya no se necesita aquí
+import { DollarSign } from "lucide-react"; // Users ya no se necesita aquí
 import { motion } from "framer-motion";
 import SalesChart from "@/components/SalesChart";
 import ProjectCountCard from "@/components/ProjectCountCard";
